@@ -8,9 +8,9 @@ makeCacheMatrix <- function(x = matrix()) {
     x <<- y
     m <<- NULL
   }
-  get <- function() x
-  setsolve <- function(solve) m <<- solve
-  getsolve <- function() m
+  get <- function() x ## metodo para obtener la matriz almacenada
+  setinversa <- function(solve) m <<- solve ##  asigna la matriz inversa definda
+  getinversa <- function() m ## obtiene la matriz inversa
   list(set = set, get = get,
        setsolve = setsolve,
        getsolve = getsolve) 
@@ -21,7 +21,7 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
   ## Return a matrix that is the inverse of 'x'
-  m <- x$getsolve()
+  m <- x$getinversa()
   if(!is.null(m)) {
     message("Datos apartir de la memoria cache")
     return(m)
@@ -29,7 +29,7 @@ cacheSolve <- function(x, ...) {
   data <- x$get()
   if(det(data)!=0) {
     m <- solve(data, ...)
-    x$setsolve(m)
+    x$setinversa(m)
     m
   } else {
     message("Esta matriz no tiene inversa")
